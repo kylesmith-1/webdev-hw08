@@ -1,0 +1,45 @@
+<p>
+  <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
+  <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+</p>
+
+<h1><%= @post.title %></h1>
+
+
+<div role="main" class="container">
+    <h2>Posted by <%= @post.user.name%></h2>
+    <img src="<%= Routes.user_path(@conn, :photo, @post.user) %>" width="173" height="206.5" alt="">
+</div>
+
+<div>
+  <%= @post.date %>
+</div>
+
+<div>
+  Description:
+  <%= @post.body %>
+</div>
+
+<h2>Add Comment</h2>
+
+<%= if have_current_user?(@conn) do %>
+  <%= render(
+    EventsWeb.CommentView,
+    "form.html",
+    changeset: @new_comment,
+    action: Routes.comment_path(@conn, :create)
+  ) %>
+<% end %>
+
+
+<h2>Comments</h2>
+
+<%= for comm <- @post.comments do %>
+  <div class="card">
+    <div class="card-body">
+      <p>Commenter: <%= comm.user.name %></p>
+      <img src="<%= Routes.user_path(@conn, :photo, comm.user) %>" width="85" height="100" alt="">
+      <p class="card-text"><%= comm.body %></p>
+    </div>
+  </div>
+<% end %>
