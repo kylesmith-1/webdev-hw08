@@ -20,6 +20,32 @@
   <%= @post.body %>
 </div>
 
+<h2>Respond to Invite</h2>
+
+<%= if have_current_user?(@conn) do %>
+    <%= render(
+      EventsWeb.InvitationView,
+      "form.html",
+      changeset: @new_invitation,
+      action: Routes.invitation_path(@conn, :create)
+    ) %>
+<% end %>
+
+
+
+<h2>Attendees</h2>
+
+<%= for invi <- @post.invitations do %>
+  <div class="card">
+    <div class="card-body">
+      <p>Responder: <%= invi.user.name %></p>
+      <img src="<%= Routes.user_path(@conn, :photo, invi.user) %>" width="85" height="100" alt="">
+      <p class="card-text"><%= invi.response %></p>
+    </div>
+  </div>
+<% end %>
+
+
 <h2>Add Comment</h2>
 
 <%= if have_current_user?(@conn) do %>

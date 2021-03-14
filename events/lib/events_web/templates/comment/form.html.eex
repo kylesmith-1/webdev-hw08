@@ -9,7 +9,6 @@
   <%= hidden_input f, :user_id %>
 
   <div class="form-group">
-    <%= label f, :body %>
     <%= textarea f, :body, class: "form-control" %>
     <%= error_tag f, :body %>
   </div>

@@ -8,4 +8,8 @@ defmodule EventsWeb.Helpers do
     user = conn.assigns[:current_user]
     user && user.id
   end
+
+  def user_not_responded?(user1, user2) do
+    user1 == user2
+  end
 end

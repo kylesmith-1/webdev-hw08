@@ -15,6 +15,9 @@ defmodule EventsWeb.InvitationController do
   end
 
   def create(conn, %{"invitation" => invitation_params}) do
+    invitation_params = invitation_params
+    |> Map.put("user_id", current_user_id(conn))
+
     case Invitations.create_invitation(invitation_params) do
       {:ok, invitation} ->
         conn

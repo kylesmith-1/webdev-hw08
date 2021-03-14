@@ -45,6 +45,10 @@ defmodule Events.Posts do
     Repo.preload(post, [comments: :user])
   end
 
+  def load_invitations(%Post{} = post) do
+    Repo.preload(post, [invitations: :user])
+  end
+
   @doc """
   Creates a post.
 

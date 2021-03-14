@@ -4,8 +4,8 @@ defmodule Events.Invitations.Invitation do
 
   schema "invitations" do
     field :response, :string
-    field :post_id, :id
-    field :user_id, :id
+    belongs_to :post, Events.Posts.Post
+    belongs_to :user, Events.Users.User
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Events.Invitations.Invitation do
   @doc false
   def changeset(invitation, attrs) do
     invitation
-    |> cast(attrs, [:response])
-    |> validate_required([:response])
+    |> cast(attrs, [:response, :post_id, :user_id])
+    |> validate_required([:response, :post_id, :user_id])
   end
 end

@@ -6,6 +6,7 @@ defmodule EventsWeb.PostController do
   alias Events.Photos
 
   alias Events.Comments
+  alias Events.Invitations
 
   plug :fetch_post when action in [:show, :photo, :edit, :update, :delete]
 
@@ -46,7 +47,13 @@ defmodule EventsWeb.PostController do
       user_id: current_user_id(conn),
     }
     new_comment = Comments.change_comment(comm)
-    render(conn, "show.html", post: post, new_comment: new_comment)
+    post = Posts.load_invitations(post)
+    invi = %Invitations.Invitation{
+      post_id: post.id,
+      user_id: current_user_id(conn),
+    }
+    new_invitation = Invitations.change_invitation(invi)
+    render(conn, "show.html", post: post, new_comment: new_comment, new_invitation: new_invitation)
   end
 
   def edit(conn, %{"id" => id}) do
